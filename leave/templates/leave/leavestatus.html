@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-12">
+    <h3 style="font-weight: bold;"> Leave report</h3>
+    <div class="row">
+        <form action="/leavestatus/" method="GET">
+            {% csrf_token %}
+            <div class="col-md-4">
+                <p>Select user to view leave
+                <select class="form-control" name="userid">
+                    {% for i in usrobj %}
+                        <option value="{{i.id}}">{{i.username}}</option>
+                    {% endfor %}
+                </select>
+                </p>
+            </div>
+            
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        <form>
+        <div class="col-md-12">
+            <p style="font-weight: bold;"><em>Leave report</em></p>
+                <table class="table table-responsive w-100 d-block d-md-table">
+                    <tr>
+                        <th>SN</th>
+                        <th>User</th>
+                        <th>Title</th>
+                        <th>From date</th>
+                        <th>To date</th>
+                        <th>Total days</th>
+                    </tr>
+                    <tbody>
+                        {% for obj in objects %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{obj.userid}}</td>
+                            <td>{{obj.title}}</td>
+                            <td>{{obj.from_date}}</td>
+                            <td>{{obj.to_date}}</td>
+                            <td>{{obj.days}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan='5' style="font-weight: bold;">Total leave</td>
+                            <td style="font-weight: bold;">{{total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

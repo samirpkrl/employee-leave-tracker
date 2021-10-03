@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-12">
+    <h3 style="font-weight: bold;"> User list</h3>
+        <table class="table table-responsive w-100 d-block d-md-table">
+            <tr>
+                <th>SN</th>
+                <th>User</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Admin</th>
+            </tr>
+            <tbody>
+                {% for obj in objects %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{obj.username}}</td>
+                    <td>{{obj.first_name}}</td>
+                    <td>{{obj.last_name}}</td>
+                    <td>{{obj.email}}</td>
+                    {% if obj.is_superuser == True %}
+                        <td>Yes</td>
+                    {% else %}
+                        <td>No</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+</div>
+{% endblock %}

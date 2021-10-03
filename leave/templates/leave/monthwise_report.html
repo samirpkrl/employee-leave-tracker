@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<script src="{% static 'js/monthwise_report.js' %}"></script>
+<div class="col-md-12">
+    <h3 style="font-weight: bold;"> Monthwise leave report</h3>
+    <div class="row">
+        <form action="/monthwise-report/" method="GET">
+            {% csrf_token %}
+            <div class="col-md-4">
+                <p>Select user to view leave
+                <select class="form-control" name="userid">
+                    {% for i in usrobj %}
+                        <option value="{{i.id}}">{{i.username}}</option>
+                    {% endfor %}
+                </select>
+                </p>
+            </div>
+        <form>
+            <div class="col-md-4">
+                <p>Filter month
+                <select class="form-control" id='monthname'>
+                    <option value="0">All</option>
+                    {% for i,value in leave.items %}
+                        <option value="{{value.0}}">{{value.0}}</option>
+                    {% endfor %}
+                </select>
+                </p>
+            </div>
+
+            <div class="col-md-12">
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        
+        <div class="col-md-12">
+            {% if uid %}
+                <p style="font-weight: bold;"><em>Monthwise Leave report for {{uid.username}}</em></p>
+            {% else %}
+                 <p style="font-weight: bold;"><em>Monthwise Leave report for all user</em></p>
+            {% endif %}
+                <table id="monthTable" class="table table-responsive w-100 d-block d-md-table">
+                    <tr id="HeadRow">
+                        <th>SN</th>
+                        <th>Month</th>
+                        <th>No of days/Month</th>
+                    </tr>
+                    <tbody>
+                        {% for key,value in leave.items %}
+                        <tr position="{{value.0}}">
+                            <td>{{forloop.counter}}</td>
+		                    <td >{{ value.0 }}<br></td>
+                            <td>{{ value.1 }}<br></td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

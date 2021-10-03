@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+        <div class="col-md-12">
+            {% if messages %}
+                <ul class="messages">
+                {% for message in messages %}
+                    <li  style="color:blue;" {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <form method="POST" class="p-3">
+                {% csrf_token %}
+                <fieldset class="form-group0">
+                    <h3 style="font-weight: bold;">Add new user</h3>
+                </fieldset>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.first_name| as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.last_name| as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.username| as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.email| as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                        {{ form.password1| as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-12 mb-0">
+                        {{ form.password2| as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-12 mb-0">
+                        {{ form.is_superuser| as_crispy_field }}
+                    </div>
+                    
+                </div>
+                           
+                <div class="form-group col-md-12 mt-3">
+                    <button class="btn btn-primary" type="submit">Create user</button>
+                </div>
+            </form>
+            <div class="border-top col-md-12 pt-3">
+                <small class="text-muted">Already have an account?<a href="#" class="ml-2">Login</a></small>
+            </div>
+        </div>
+
+{% endblock %}
